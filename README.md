@@ -1,36 +1,157 @@
-v1.2 Full Headless Zombie Edition logic, integrating the purposeful beheading, smartphone control, and the critical internal drive trick.
-🧟 Mercury: The Headless Zombie Media Stack (v1.2)
-User: markvx1irondestroyer-hub
-Description
-A fully automated installer and Docker stack for a high-availability media server. This "Full Headless" edition is purposefully beheaded to disable the desktop GUI, saving RAM and power while keeping the NVIDIA GTX 750 awake for transcoding without a monitor. Everything is controlled remotely via smartphone.
-🚀 Installation & The Beheading
- * Prepare the Foundation: Download the files to your home directory.
- * Execute the Beheading:
-   bash install-headless.sh
-   (This installs drivers, enables GPU persistence, and disables the GUI. The PC will reboot into a text-only state.)
- * The Internal Drive Trick: Immediately after reboot, secure your "Vault" so movies don't disappear:
-   bash mount-vault.sh
-   (This tricks the system into mounting your external Expansion drive before the apps wake up.)
- * Resurrect the Stack:
-   m up
-📱 The Digital Nerve Center (Web UI)
-Access these ports via your smartphone browser using your server's IP to finish the brain connection:
- * Portainer (9443): Visual management for all containers.
- * Prowlarr (9696): Indexer manager; syncs indexers to Radarr/Sonarr.
- * Jellyfin (8096): Media player; point libraries to /data/expansion.
- * Radarr/Sonarr (7878/8989): Connect to qBittorrent using hostname qbittorrent.
- * Jellyseerr (5055): One-click request hub; connect via API Keys.
-📒 The 'm' Command
-| Command | Result |
-|---|---|
-| m up | Starts the entire media stack in the background. |
-| m status | Checks storage status, GPU health, and app vitals. |
-| m gpu | Live 1-second monitor of the GTX 750 performance. |
-| m mount | Forces a refresh/mount of the Expansion Vault. |
-| m reset | Nuclear Reset: Wipes cache and restarts the stack fresh. |
-| m gui-on | Restores Desktop GUI (Emergency repairs only, requires reboot). |
-| m gui-off | Returns to pure Headless mode (requires reboot). |
-⚠️ Safety & Responsibility
- * Check the Code: Always inspect scripts before piping them into your terminal.
- * Power Stability: A UPS is recommended to protect the "Internal Trick" mount during power loss.
- * User Risk: You acknowledge you are modifying system boot targets at your own risk.
+​🧟 MERCURY: THE FULL HEADLESS ZOMBIE EDITION (v1.2)
+
+
+​"The Beheading was Purposeful. The Smartphone is the Crown."
+
+
+​This is the official blueprint for a dedicated, monitor-free media server. By "Beheading" the system, we disable the Desktop GUI to save RAM and power, allowing the NVIDIA GTX 750 to focus entirely on transcoding media for your remote devices.
+
+
+​PHASE 1: THE PURPOSEFUL BEHEADING
+
+
+​Goal: Prepare the hardware and disable the monitor requirement.
+
+
+
+
+
+​Prepare the Installer:
+
+
+
+​Create a file named install-headless.sh.
+
+
+​Paste the content of the Master Installer script into this file.
+
+
+
+
+
+
+
+​Execute:
+
+
+
+​Run chmod +x install-headless.sh.
+
+
+​Run ./install-headless.sh.
+
+
+
+
+
+
+​What happens: The script installs NVIDIA drivers, enables GPU persistence (keeping the card awake without a monitor), installs Docker, and sets the system to boot directly to the terminal. The PC will reboot automatically.
+
+
+
+
+​PHASE 2: THE INTERNAL DRIVE TRICK
+
+
+​Goal: Ensure the "Vault" (Expansion Drive) is connected before the apps wake up.
+
+
+
+
+​Why this matters: If the server reboots, Docker apps often start faster than USB drives can mount. This script "tricks" Linux into treating your external drive as a permanent internal component so your library never looks empty.
+
+
+
+​Execute:
+
+
+
+​Create mount-vault.sh.
+
+
+​Run chmod +x mount-vault.sh && ./mount-vault.sh.
+
+
+
+
+
+
+
+
+​PHASE 3: THE GOLDEN DEPLOYMENT
+
+
+​Goal: Wake the media empire.
+
+
+
+
+
+​Deploy the Stack:
+
+
+
+​Ensure your docker-compose.yml (The Golden YAML) is in ~/mercury/.
+
+
+​Run the master command: m up.
+
+
+
+
+
+
+
+​The 'm' Command: You now have a single-letter interface to manage the server.
+
+
+
+​m status: Check vitals.
+
+
+​m gpu: Monitor the GTX 750.
+
+
+​m reset: The "Nuclear" fix for hangs.
+
+
+
+
+
+
+
+
+​PHASE 4: THE DIGITAL NERVE CENTER (Smartphone Setup)
+
+
+​Once the stack is up, use your smartphone browser and the server's IP address to finish the configuration:
+
+
+
+
+​Portainer (Port 9443): Your mobile command center for managing all apps.
+
+
+​Prowlarr (Port 9696): Add your indexers; they will automatically sync to Radarr and Sonarr.
+
+
+​Radarr/Sonarr (Ports 7878/8989): Connect them to qBittorrent using the hostname qbittorrent.
+
+
+​Jellyseerr (Port 5055): Connect to Jellyfin and your Arrs via API Keys to enable one-click requests from your phone.
+
+
+
+
+​⚠️ SAFETY & RECOVERY
+
+
+
+
+​Emergency Desktop: If you ever need the monitor back for local repairs, type m gui-on and reboot.
+
+
+​Return to Shadow: Type m gui-off and reboot to return to the pure Headless state.
+
+
+
