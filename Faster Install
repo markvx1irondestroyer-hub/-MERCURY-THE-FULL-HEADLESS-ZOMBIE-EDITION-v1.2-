@@ -38,6 +38,24 @@ The script finished, but the Zombie needs a soul. Complete these steps in order:
 | Prowlarr | 9696 | Central hub for all your movie/show searchers |
 | qBittorrent | 8080 | Managing active downloads |
 ​🔑 THE MASTER API KEY GUIDE
+COPY FULL CODE BELOW OR FOLLOW INSTRUCTIONS UNDERNEATH 
+#!/bin/bash
+# 🧟 MERCURY: THE SOUL INJECTOR (Automated API Linker)
+
+echo "📡 Extracting API Keys from the Vault..."
+
+# Extract keys from XML files
+SONARR_KEY=$(grep -oP '(?<=<ApiKey>).*?(?=</ApiKey>)' ~/mercury/config/sonarr/config.xml)
+RADARR_KEY=$(grep -oP '(?<=<ApiKey>).*?(?=</ApiKey>)' ~/mercury/config/radarr/config.xml)
+PROWLARR_KEY=$(grep -oP '(?<=<ApiKey>).*?(?=</ApiKey>)' ~/mercury/config/prowlarr/config.xml)
+
+echo "--------------------------------"
+echo "✅ Sonarr Key:  $SONARR_KEY"
+echo "✅ Radarr Key:  $RADARR_KEY"
+echo "✅ Prowlarr Key: $PROWLARR_KEY"
+echo "--------------------------------"
+echo "📱 Copy these to Jellyseerr (Port 5055) to finish the link."
+
 
 
 ​To make your media stack work as one unit, the apps must "talk" to each other using API keys. Use this list to find every key you need.
