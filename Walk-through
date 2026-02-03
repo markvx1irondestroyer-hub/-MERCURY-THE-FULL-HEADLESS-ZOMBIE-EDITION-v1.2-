@@ -1,19 +1,41 @@
-​🧟 MERCURY: THE FULL HEADLESS ZOMBIE EDITION (v1.2) 🧟
+​🧟 MERCURY: THE FULL HEADLESS ZOMBIE EDITION (v1.2)
 
 
-"The Beheading was Purposeful. The Smartphone is the Crown."
+​"The Beheading was Purposeful. The Smartphone is the Crown."
 
 
-​This is a complete, end-to-end blueprint for a dedicated, monitor-free media server.
+​This guide transforms your PC into a dedicated, monitor-free media server. By following these steps, you will disable the desktop interface to save RAM and enable full control via your smartphone.
 
 
-​PHASE 1: THE PURPOSEFUL BEHEADING (install-headless.sh)
+​STEP 1: THE PURPOSEFUL BEHEADING
 
 
-​Run this script to install drivers, enable GPU persistence, and disable the desktop GUI.
+​Goal: Install all drivers and disable the Desktop GUI so the PC boots into a "Headless" state.
 
 
-​#!/bin/bash
+
+
+​Create a new file on your PC named install-headless.sh.
+
+
+​Copy the code below and paste it into that file.
+
+
+​Open your terminal and run: chmod +x install-headless.sh
+
+
+​Run the script: ./install-headless.sh
+
+
+​What happens: The script installs NVIDIA drivers, sets the GPU to stay awake without a monitor, sets up Docker, and tells the PC to stop loading the desktop. Your PC will reboot automatically.
+
+
+
+
+​-- COPY START --
+
+
+#!/bin/bash
 
 
 echo "🚀 Starting the Purposeful Beheading..."
@@ -133,13 +155,35 @@ sleep 5
 sudo reboot
 
 
-​PHASE 2: THE INTERNAL DRIVE TRICK (mount-vault.sh)
+-- COPY END --
 
 
-​Run this immediately after reboot to ensure the "Vault" is ready before the apps wake up.
+​STEP 2: THE INTERNAL DRIVE TRICK
 
 
-​#!/bin/bash
+​Goal: Trick Linux into treating your USB drive as a permanent internal drive so your movies don't "disappear" after a reboot.
+
+
+
+
+​Create a file named mount-vault.sh.
+
+
+​Copy the code below into it.
+
+
+​Run: chmod +x mount-vault.sh then ./mount-vault.sh
+
+
+​What happens: The script asks for your drive's ID (UUID) and locks it into the system's core boot table. This ensures the "Vault" is ready before Jellyfin even starts.
+
+
+
+
+​-- COPY START --
+
+
+#!/bin/bash
 
 
 echo "🔍 Searching for External Drive UUID..."
@@ -166,232 +210,61 @@ sudo mount -a
 echo "✅ Expansion Drive integrated as internal storage."
 
 
-​PHASE 3: WAKING THE ZOMBIE
+-- COPY END --
 
 
-​Run the following command to pull and start your applications:
+​STEP 3: WAKING THE ZOMBIE
+
+
+​Now that the server is headless, type this single command to start your media apps:
 
 
 m up
 
 
-​PHASE 4: THE DIGITAL NERVE CENTER (Web UI Setup)
+​STEP 4: THE DIGITAL NERVE CENTER (Setup Guide)
 
 
-​Your server is now headless. Access these ports via your smartphone browser using your server's IP:
+​Your server has no screen now. Open your smartphone browser, type in your server's IP address, and use these ports to finish the setup:
 
 
 
 
-​Portainer (Port 9443): Your mobile command center. Log in first to ensure all containers show a green "Running" status.
+​Portainer (Port 9443): Your visual dashboard. Use this to see if your apps are running.
 
 
-​Jellyfin (Port 8096): Run the startup wizard. When adding libraries, point them to /data/storage (your landing zone) or /data/expansion (your vault).
+​Jellyfin (Port 8096): Point your "Movie Library" to /data/expansion.
 
 
-​qBittorrent (Port 8080): Go to Settings > Web UI and change the default password immediately.
+​Prowlarr (Port 9696): Add your torrent sites here.
 
 
-​Prowlarr (Port 9696): Add your indexers here. Use the "Sync" feature to automatically push them to Sonarr and Radarr.
+​Radarr/Sonarr (Ports 7878/8989): Connect them to qBittorrent using the hostname qbittorrent.
 
 
-​Radarr (Port 7878) & Sonarr (Port 8989): * Go to Settings > Download Clients.
+​Jellyseerr (Port 5055): Connect everything here using API Keys found in the other apps' settings.
 
 
 
 
+​📒 COMMAND CHEAT SHEET
 
 
-​Add qBittorrent.
 
 
-​Crucial: Use the container name "qbittorrent" as the Hostname, not your IP.
+​m up: Start the apps.
 
 
-​Set your "Root Folders" to /data/expansion to ensure movies are stored in the Vault.
+​m status: Check drive space and GPU health from your phone.
 
 
+​m mount: Refresh the connection to your USB Vault.
 
 
+​m gui-on: Turn the desktop screen back on (requires reboot).
 
 
-​Jellyseerr (Port 5055): The request hub. Connect it to Jellyfin and your *Arr apps using the API keys found in their respective Settings > General tabs.
-
-
-
-
-​📒 HEADLESS COMMAND CHEAT SHEET
-
-
-​m up: Wake the media empire.
-
-
-m status: Check storage and GPU health from your phone.
-
-
-m mount: Force-connect the Vault if it’s missing.
-
-
-m gui-on: Emergency Desktop restore (requires reboot).
-
-
-m gui-off: Return to pure Headless performance (requires reboot).
-
-
-​⚠️ THE VAULT WARNING
-
-
-If you don't run the mount-vault.sh "Internal Trick," your apps will wake up before the USB drive is ready, and Jellyfin will report your library is empty. This script ensures the brain and the memories are always connected.
-
-
-​sudo apt-get install -y ca-certificates curl gnupg
-
-
-sudo install -m 0755 -d /etc/apt/keyrings
-
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-
-
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
-
-
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-
-sudo apt update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-
-sudo usermod -aG docker $USER
-
-
-sudo systemctl restart docker
-
-
-​4. Mercury Environment Setup
-
-
-​mkdir -p ~/mercury/config/{jellyfin,jellyseerr,sonarr,radarr,prowlarr,qbittorrent,flaresolverr,tailscale,portainer}
-
-
-sudo mkdir -p /media/linux/Expansion
-
-
-​5. Inject Master 'm' Commands (With GUI Toggle)
-
-
-​cat << 'EOF' >> ~/.bash_aliases
-
-
-alias gpu='watch -n 1 nvidia-smi'
-
-
-alias mercury='cd ~/mercury'
-
-
-m() {
-
-
-case $1 in
-
-
-gpu)     gpu ;;
-
-
-up)      cd ~/mercury && docker compose up -d ;;
-
-
-ps)      docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" ;;
-
-
-reset)   cd ~/mercury && docker compose down && docker system prune -f && docker compose up -d ;;
-
-
-mount)   sudo mount -a && echo "🧟 Vault Refreshed." ;;
-
-
-status)  ~/mercury/status.sh ;;
-
-
-gui-on)  sudo systemctl set-default graphical.target && echo "✅ GUI Restored. Reboot to see desktop." ;;
-
-
-gui-off) sudo systemctl set-default multi-user.target && echo "🧟 Beheaded. Reboot for Headless mode." ;;
-
-
-*)       echo "Usage: m [gpu|up|ps|reset|mount|status|gui-on|gui-off]" ;;
-
-
-esac
-
-
-}
-
-
-EOF
-
-
-​6. THE PURPOSEFUL BEHEADING
-
-
-​Disables GUI to save all RAM for the Media Stack
-
-
-​sudo systemctl set-default multi-user.target
-
-
-​echo "🧟 The Zombie is now Headless. Rebooting in 5 seconds..."
-
-
-sleep 5
-
-
-sudo reboot
-
-
-​📒 New Headless Cheat Sheet
-
-
-
-
-​m up: Wake the media empire.
-
-
-​m status: Check the vitals from your phone.
-
-
-​m mount: Use the "Internal Trick" to force-connect the Vault.
-
-
-​m gui-on: Bring the Desktop back to life (Emergency use only).
-
-
-​m gui-off: Return to the pure Headless state.
-
-
-
-
-​⚠️ The Vault Warning
-
-
-
-
-​Pleasant Reminder: Always run your mount-vault.sh after a clean install! If the Zombie wakes up before the Vault is mounted, Jellyfin will think your library has vanished. This "Internal Trick" ensures the heart of your server stays connected to its memories.
-⚠️ Safety & Responsibility
-
-
-
-
-​Check the Code: Always inspect scripts before piping them into your terminal.
-
-
-Power Stability: Because this is a headless server, an Uninterruptible Power Supply (UPS) is recommended to prevent data corruption during the "Internal Trick" mount.
-
-
-User Risk: You acknowledge that you are modifying system boot targets and hardware persistence at your own risk. I am not responsible for system instability.
-
-
-
+​m gui-off: Go back to headless mode (requires reboot).
 
 
 
