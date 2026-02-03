@@ -1,0 +1,18 @@
+1. The Desktop Version (Mercury-The-Headless-Zombie-Media-Stack)
+This version keeps the Zorin/Ubuntu Desktop active so you can use it with a monitor, but still gives you the single-letter m commands for convenience.
+ * Mode: Graphical Desktop remains the default.
+ * Best For: Users who still want to use the PC as a computer while it serves media.
+ * The Script: Your current install.sh in this repo is correct; it installs everything but does not disable the screen.
+ * Manual Toggle: You can add the m gui-off command to this script if you want the option to turn the screen off later.
+2. The Headless Version (-MERCURY-THE-FULL-HEADLESS-ZOMBIE-EDITION-v1.2-)
+This version is designed to be "Beheaded" from the start, saving every bit of RAM for your GTX 750.
+ * Mode: Terminal Only (no Desktop GUI).
+ * Best For: Dedicated server hardware tucked away in a closet or under a desk.
+ * The Script: Your install-headless.sh includes the multi-user.target command, which kills the Desktop permanently unless you manually call it back.
+Comparison Checklist
+| Feature | Desktop (Head) | Headless (Zombie) |
+|---|---|---|
+| Monitor Required? | Yes, for setup and use | No, controlled via phone/web |
+| RAM Usage | Higher (Desktop uses ~1-2GB) | Lowest (Reclaims RAM for GPU) |
+| Main Command | install.sh | install-headless.sh |
+| Default Boot | Desktop | Terminal 
