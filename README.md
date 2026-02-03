@@ -1,3 +1,5 @@
+[![🧟 Mercury Stack Validation](https://github.com/markvx1irondestroyer-hub/-Mercury-The-Headless-Zombie-Media-Stack-/actions/workflows/validate-stack.yml/badge.svg)](https://github.com/markvx1irondestroyer-hub/-Mercury-The-Headless-Zombie-Media-Stack-/actions/workflows/validate-stack.yml)
+
 ​🧟 MERCURY: THE FULL HEADLESS ZOMBIE EDITION (v1.2)
 
 
