@@ -1,270 +1,92 @@
 ​🧟 MERCURY: THE FULL HEADLESS ZOMBIE EDITION (v1.2)
-
-
 ​"The Beheading was Purposeful. The Smartphone is the Crown."
-
-
-​This is a step-by-step manual for turning your PC into a monitor-free media server. Follow these instructions in the exact order they are listed.
-
-
+​This is a comprehensive manual for transforming your PC into a monitor-free media server. Follow these instructions in the exact order listed to ensure the "Zombie" wakes up correctly.
 ​STEP 1: PREPARE THE INSTALLER
-
-
-​Before we can run the "Beheading" script, we have to create the file on your server.
-
-
-
-
+​Before running the "Beheading" script, you must create the file on your server.
 ​Open your Terminal.
-
-
-
 ​Type this command and press Enter:
 nano install-headless.sh
-(This opens a blank blue screen where you can type).
-
-
-
-​Copy the entire block below (from #!/bin/bash all the way to sudo reboot) and paste it into that terminal window.
-
-
+(This opens a blank editor window).
+​Copy the entire block below and paste it into that window.
 ​Save and Exit: Press Ctrl + O, then Enter, then Ctrl + X.
-
-
-
-
 ​-- COPY THIS SECTION --
-
-
 #!/bin/bash
-
-
 echo "🚀 Starting the Purposeful Beheading..."
-
-
-sudo apt update && sudo apt upgrade -y
-
-
+​1. System Foundation & Drivers
+​sudo apt update && sudo apt upgrade -y
 sudo ubuntu-drivers autoinstall
-
-
-sudo nvidia-smi -pm 1
-
-
+​2. NVIDIA Persistence & Toolkit (GPU Fix)
+​sudo nvidia-smi -pm 1
 curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
-
-
 curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
-
-
 sudo apt update && sudo apt-get install -y nvidia-container-toolkit
-
-
 sudo nvidia-ctk runtime configure --runtime=docker
-
-
-sudo apt-get install -y ca-certificates curl gnupg
-
-
+​3. Docker Engine Setup
+​sudo apt-get install -y ca-certificates curl gnupg
 sudo install -m 0755 -d /etc/apt/keyrings
-
-
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-
-
 sudo chmod a+r /etc/apt/keyrings/docker.gpg
-
-
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-
 sudo apt update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-
 sudo usermod -aG docker $USER
-
-
 sudo systemctl restart docker
-
-
-mkdir -p ~/mercury/config/{jellyfin,jellyseerr,sonarr,radarr,prowlarr,qbittorrent,flaresolverr,tailscale,portainer}
-
-
+​4. Mercury Environment Setup
+​mkdir -p ~/mercury/config/{jellyfin,jellyseerr,sonarr,radarr,prowlarr,qbittorrent,flaresolverr,tailscale,portainer}
 sudo mkdir -p /media/linux/Expansion
-
-
-cat << 'EOF' >> ~/.bash_aliases
-
-
+​5. Inject Master 'm' Command (With GUI Toggle)
+​cat << 'EOF' >> ~/.bash_aliases
 alias gpu='watch -n 1 nvidia-smi'
-
-
 alias mercury='cd ~/mercury'
-
-
 m() {
-
-
 case $1 in
-
-
-gpu)     gpu ;;
-
-
-up)      cd ~/mercury && docker compose up -d ;;
-
-
-ps)      docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" ;;
-
-
-reset)   cd ~/mercury && docker compose down && docker system prune -f && docker compose up -d ;;
-
-
-mount)   sudo mount -a && echo "🧟 Vault Refreshed." ;;
-
-
-status)  ~/mercury/status.sh ;;
-
-
-gui-on)  sudo systemctl set-default graphical.target && echo "✅ GUI Restored. Reboot to see desktop." ;;
-
-
+gpu)     gpu ;;
+up)      cd ~/mercury && docker compose up -d ;;
+ps)      docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" ;;
+reset)   cd ~/mercury && docker compose down && docker system prune -f && docker compose up -d ;;
+mount)   sudo mount -a && echo "🧟 Vault Refreshed." ;;
+status)  ~/mercury/status.sh ;;
+gui-on)  sudo systemctl set-default graphical.target && echo "✅ GUI Restored. Reboot to see desktop." ;;
 gui-off) sudo systemctl set-default multi-user.target && echo "🧟 Beheaded. Reboot for Headless mode." ;;
-
-
-*)       echo "Usage: m [gpu|up|ps|reset|mount|status|gui-on|gui-off]" ;;
-
-
+*)       echo "Usage: m [gpu|up|ps|reset|mount|status|gui-on|gui-off]" ;;
 esac
-
-
 }
-
-
 EOF
-
-
-sudo systemctl set-default multi-user.target
-
-
+​6. THE PURPOSEFUL BEHEADING
+​sudo systemctl set-default multi-user.target
 echo "🧟 The Zombie is now Headless. Rebooting in 5 seconds..."
-
-
 sleep 5
-
-
 sudo reboot
-
-
 -- END SECTION --
-
-
 ​STEP 2: ACTIVATE THE INSTALLER
-
-
-​Now that the file exists, you must tell the computer it is allowed to run it as a program.
-
-
-
-
 ​Type this command and press Enter:
 chmod +x install-headless.sh.
-
-
-​Run the script by typing:
+​Run the script:
 ./install-headless.sh.
-
-
-​What happens: Your screen will fill with text as it installs. When it finishes, the computer will reboot, and the desktop screen will disappear forever.
-
-
-
-
-​STEP 3: LOCK THE VAULT (The Internal Drive Trick)
-
-
-​After the reboot, you must trick the system into holding onto your external drive so your movies don't disappear.
-
-
-
-
-​Type this to create the script:
-nano mount-vault.sh.
-
-
+​What happens: Your PC will install the drivers, disable the desktop GUI, and reboot into a headless state.
+​STEP 3: THE INTERNAL DRIVE TRICK (mount-vault.sh)
+​Immediately after reboot, you must trick Linux into mounting your external "Vault" before the apps wake up.
+​Type: nano mount-vault.sh.
 ​Paste the code below into the window.
-
-
 ​Save and Exit: Press Ctrl + O, then Enter, then Ctrl + X.
-
-
-​Make it runnable:
-chmod +x mount-vault.sh.
-
-
-​Run it:
-./mount-vault.sh.
-
-
-
-
+​Run it: chmod +x mount-vault.sh && ./mount-vault.sh.
 ​-- COPY THIS SECTION --
-
-
 #!/bin/bash
-
-
 echo "🔍 Searching for External Drive UUID..."
-
-
 lsblk -f
-
-
 echo "⚠️ Copy the UUID for your Expansion drive from the list above."
-
-
 read -p "Enter the UUID: " UUID
-
-
 sudo cp /etc/fstab /etc/fstab.bak
-
-
 echo "UUID=$UUID /media/linux/Expansion auto nosuid,nodev,nofail,x-gvfs-show 0 0" | sudo tee -a /etc/fstab
-
-
 sudo mount -a
-
-
 echo "✅ Expansion Drive integrated as internal storage."
-
-
 -- END SECTION --
-
-
-​STEP 4: WAKE THE ZOMBIE
-
-
-​Now, type this single command to start all your apps:
-
-
+​STEP 4: WAKING THE ZOMBIE
+​Start all your apps with one command:
 m up.
-
-
-​STEP 5: THE SMARTPHONE CONTROL CENTER
-
-
-​Everything is now handled through your phone browser. Use your server's IP address and these ports:
-
-
-
-
-​Portainer (Port 9443): Tap here to see if the server is healthy.
-
-
-​Jellyfin (Port 8096): Your media player. Point libraries to /data/expansion.
-
-
-​Radarr/Sonarr (Ports 7878/8989): Connect to qbittorrent in the settings.
-
+​STEP 5: THE DIGITAL NERVE CENTER (Web UI)
+​Access these ports via your smartphone browser using your server's IP:
+​Portainer (9443): Your visual command center.
+​Prowlarr (9696): Add indexers and sync them to Sonarr/Radarr.
+​Jellyseerr (5055): Connect everything via API keys.
 
 
