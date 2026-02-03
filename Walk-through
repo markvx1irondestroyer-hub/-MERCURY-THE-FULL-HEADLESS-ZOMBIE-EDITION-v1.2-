@@ -1,23 +1,31 @@
-​🧟 MERCURY: THE FULL HEADLESS ZOMBIE EDITION
+​🧟 MERCURY: THE FULL HEADLESS ZOMBIE EDITION (v1.2) 🧟
+
+
+"The Beheading was Purposeful. The Smartphone is the Crown."
+
+
+​This is a complete, end-to-end blueprint for a dedicated, monitor-free media server.
+
+
+​PHASE 1: THE PURPOSEFUL BEHEADING (install-headless.sh)
+
+
+​Run this script to install drivers, enable GPU persistence, and disable the desktop GUI.
+
+
+​#!/bin/bash
+
+
 echo "🚀 Starting the Purposeful Beheading..."
 
 
-​1. System & NVIDIA Drivers
-
-
-​sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y
 
 
 sudo ubuntu-drivers autoinstall
 
 
-​2. NVIDIA Persistence & Toolkit
-
-
-​Keeps the GPU awake for transcoding without a monitor attached
-
-
-​sudo nvidia-smi -pm 1
+sudo nvidia-smi -pm 1
 
 
 curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
@@ -32,7 +40,208 @@ sudo apt update && sudo apt-get install -y nvidia-container-toolkit
 sudo nvidia-ctk runtime configure --runtime=docker
 
 
-​3. Docker Engine & Compose
+sudo apt-get install -y ca-certificates curl gnupg
+
+
+sudo install -m 0755 -d /etc/apt/keyrings
+
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+
+sudo apt update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+
+sudo usermod -aG docker $USER
+
+
+sudo systemctl restart docker
+
+
+mkdir -p ~/mercury/config/{jellyfin,jellyseerr,sonarr,radarr,prowlarr,qbittorrent,flaresolverr,tailscale,portainer}
+
+
+sudo mkdir -p /media/linux/Expansion
+
+
+cat << 'EOF' >> ~/.bash_aliases
+
+
+alias gpu='watch -n 1 nvidia-smi'
+
+
+alias mercury='cd ~/mercury'
+
+
+m() {
+
+
+case $1 in
+
+
+gpu)     gpu ;;
+
+
+up)      cd ~/mercury && docker compose up -d ;;
+
+
+ps)      docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" ;;
+
+
+reset)   cd ~/mercury && docker compose down && docker system prune -f && docker compose up -d ;;
+
+
+mount)   sudo mount -a && echo "🧟 Vault Refreshed." ;;
+
+
+status)  ~/mercury/status.sh ;;
+
+
+gui-on)  sudo systemctl set-default graphical.target && echo "✅ GUI Restored. Reboot to see desktop." ;;
+
+
+gui-off) sudo systemctl set-default multi-user.target && echo "🧟 Beheaded. Reboot for Headless mode." ;;
+
+
+*)       echo "Usage: m [gpu|up|ps|reset|mount|status|gui-on|gui-off]" ;;
+
+
+esac
+
+
+}
+
+
+EOF
+
+
+sudo systemctl set-default multi-user.target
+
+
+echo "🧟 The Zombie is now Headless. Rebooting in 5 seconds..."
+
+
+sleep 5
+
+
+sudo reboot
+
+
+​PHASE 2: THE INTERNAL DRIVE TRICK (mount-vault.sh)
+
+
+​Run this immediately after reboot to ensure the "Vault" is ready before the apps wake up.
+
+
+​#!/bin/bash
+
+
+echo "🔍 Searching for External Drive UUID..."
+
+
+lsblk -f
+
+
+echo "⚠️ Copy the UUID for your Expansion drive."
+
+
+read -p "Enter the UUID: " UUID
+
+
+sudo cp /etc/fstab /etc/fstab.bak
+
+
+echo "UUID=$UUID /media/linux/Expansion auto nosuid,nodev,nofail,x-gvfs-show 0 0" | sudo tee -a /etc/fstab
+
+
+sudo mount -a
+
+
+echo "✅ Expansion Drive integrated as internal storage."
+
+
+​PHASE 3: WAKING THE ZOMBIE
+
+
+​Run the following command to pull and start your applications:
+
+
+m up
+
+
+​PHASE 4: THE DIGITAL NERVE CENTER (Web UI Setup)
+
+
+​Your server is now headless. Access these ports via your smartphone browser using your server's IP:
+
+
+
+
+​Portainer (Port 9443): Your mobile command center. Log in first to ensure all containers show a green "Running" status.
+
+
+​Jellyfin (Port 8096): Run the startup wizard. When adding libraries, point them to /data/storage (your landing zone) or /data/expansion (your vault).
+
+
+​qBittorrent (Port 8080): Go to Settings > Web UI and change the default password immediately.
+
+
+​Prowlarr (Port 9696): Add your indexers here. Use the "Sync" feature to automatically push them to Sonarr and Radarr.
+
+
+​Radarr (Port 7878) & Sonarr (Port 8989): * Go to Settings > Download Clients.
+
+
+
+
+
+
+​Add qBittorrent.
+
+
+​Crucial: Use the container name "qbittorrent" as the Hostname, not your IP.
+
+
+​Set your "Root Folders" to /data/expansion to ensure movies are stored in the Vault.
+
+
+
+
+
+
+​Jellyseerr (Port 5055): The request hub. Connect it to Jellyfin and your *Arr apps using the API keys found in their respective Settings > General tabs.
+
+
+
+
+​📒 HEADLESS COMMAND CHEAT SHEET
+
+
+​m up: Wake the media empire.
+
+
+m status: Check storage and GPU health from your phone.
+
+
+m mount: Force-connect the Vault if it’s missing.
+
+
+m gui-on: Emergency Desktop restore (requires reboot).
+
+
+m gui-off: Return to pure Headless performance (requires reboot).
+
+
+​⚠️ THE VAULT WARNING
+
+
+If you don't run the mount-vault.sh "Internal Trick," your apps will wake up before the USB drive is ready, and Jellyfin will report your library is empty. This script ensures the brain and the memories are always connected.
 
 
 ​sudo apt-get install -y ca-certificates curl gnupg
