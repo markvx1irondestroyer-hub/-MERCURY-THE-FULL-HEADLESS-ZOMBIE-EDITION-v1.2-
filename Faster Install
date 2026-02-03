@@ -37,3 +37,100 @@ The script finished, but the Zombie needs a soul. Complete these steps in order:
 | Jellyseerr | 5055 | Requesting new movies from your phone |
 | Prowlarr | 9696 | Central hub for all your movie/show searchers |
 | qBittorrent | 8080 | Managing active downloads |
+​🔑 THE MASTER API KEY GUIDE
+
+
+​To make your media stack work as one unit, the apps must "talk" to each other using API keys. Use this list to find every key you need.
+
+
+​1. Sonarr & Radarr API Keys
+
+
+​These keys allow Prowlarr and Jellyseerr to send movie and show requests to your downloaders.
+
+
+
+
+​Where to look: Open the app (Port 8989 for Sonarr / 7878 for Radarr).
+
+
+​Path: Go to Settings ➔ General.
+
+
+​The Key: Look for the Security section. The "API Key" is a long string of random letters and numbers.
+
+
+
+
+​2. Prowlarr API Key
+
+
+​This key is required if you want to manage Prowlarr from another app or a custom dashboard.
+
+
+
+
+​Where to look: Open Prowlarr (Port 9696).
+
+
+​Path: Go to Settings ➔ General.
+
+
+​The Key: Copy the code found in the API Key field.
+
+
+
+
+​3. Jellyfin API Key
+
+
+​This key allows Jellyseerr to see your "Watch History" and current library.
+
+
+
+
+​Where to look: Open Jellyfin (Port 8096).
+
+
+​Path: Go to Administration ➔ Dashboard ➔ Advanced ➔ API Keys.
+
+
+​Task: Click the + New API Key button and name it "Jellyseerr" to generate your code.
+
+
+
+
+​4. Jellyseerr API Key
+
+
+​Used for integrating your request hub with third-party dashboards or mobile apps.
+
+
+
+
+​Where to look: Open Jellyseerr (Port 5055).
+
+
+​Path: Go to Settings ➔ General.
+
+
+​The Key: Look for the API Key field near the top of the page.
+
+
+
+
+​💡 PRO-TIPS FOR CONFIGURATION
+
+
+
+
+​Copy/Paste Only: Never type these keys by hand. One wrong character will cause a "Connection Failed" error.
+
+
+​Test the Connection: Every app has a "Test" button next to the API Key field. Always click it until you see a green checkmark before clicking "Save".
+
+
+​Regenerate if Leaked: If you accidentally show your API key in a screenshot online, use the Regenerate button (the arrows next to the key) to create a new one immediately.
+
+
+
