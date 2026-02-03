@@ -4,35 +4,36 @@
 ​"The Beheading was Purposeful. The Smartphone is the Crown."
 
 
-​This guide transforms your PC into a dedicated, monitor-free media server. By following these steps, you will disable the desktop interface to save RAM and enable full control via your smartphone.
+​This is a step-by-step manual for turning your PC into a monitor-free media server. Follow these instructions in the exact order they are listed.
 
 
-​STEP 1: THE PURPOSEFUL BEHEADING
+​STEP 1: PREPARE THE INSTALLER
 
 
-​Goal: Install all drivers and disable the Desktop GUI so the PC boots into a "Headless" state.
-
-
-
-
-​Create a new file on your PC named install-headless.sh.
-
-
-​Copy the code below and paste it into that file.
-
-
-​Open your terminal and run: chmod +x install-headless.sh
-
-
-​Run the script: ./install-headless.sh
-
-
-​What happens: The script installs NVIDIA drivers, sets the GPU to stay awake without a monitor, sets up Docker, and tells the PC to stop loading the desktop. Your PC will reboot automatically.
+​Before we can run the "Beheading" script, we have to create the file on your server.
 
 
 
 
-​-- COPY START --
+​Open your Terminal.
+
+
+
+​Type this command and press Enter:
+nano install-headless.sh
+(This opens a blank blue screen where you can type).
+
+
+
+​Copy the entire block below (from #!/bin/bash all the way to sudo reboot) and paste it into that terminal window.
+
+
+​Save and Exit: Press Ctrl + O, then Enter, then Ctrl + X.
+
+
+
+
+​-- COPY THIS SECTION --
 
 
 #!/bin/bash
@@ -155,32 +156,59 @@ sleep 5
 sudo reboot
 
 
--- COPY END --
+-- END SECTION --
 
 
-​STEP 2: THE INTERNAL DRIVE TRICK
+​STEP 2: ACTIVATE THE INSTALLER
 
 
-​Goal: Trick Linux into treating your USB drive as a permanent internal drive so your movies don't "disappear" after a reboot.
-
-
-
-
-​Create a file named mount-vault.sh.
-
-
-​Copy the code below into it.
-
-
-​Run: chmod +x mount-vault.sh then ./mount-vault.sh
-
-
-​What happens: The script asks for your drive's ID (UUID) and locks it into the system's core boot table. This ensures the "Vault" is ready before Jellyfin even starts.
+​Now that the file exists, you must tell the computer it is allowed to run it as a program.
 
 
 
 
-​-- COPY START --
+​Type this command and press Enter:
+chmod +x install-headless.sh.
+
+
+​Run the script by typing:
+./install-headless.sh.
+
+
+​What happens: Your screen will fill with text as it installs. When it finishes, the computer will reboot, and the desktop screen will disappear forever.
+
+
+
+
+​STEP 3: LOCK THE VAULT (The Internal Drive Trick)
+
+
+​After the reboot, you must trick the system into holding onto your external drive so your movies don't disappear.
+
+
+
+
+​Type this to create the script:
+nano mount-vault.sh.
+
+
+​Paste the code below into the window.
+
+
+​Save and Exit: Press Ctrl + O, then Enter, then Ctrl + X.
+
+
+​Make it runnable:
+chmod +x mount-vault.sh.
+
+
+​Run it:
+./mount-vault.sh.
+
+
+
+
+​-- COPY THIS SECTION --
 
 
 #!/bin/bash
@@ -192,7 +220,7 @@ echo "🔍 Searching for External Drive UUID..."
 lsblk -f
 
 
-echo "⚠️ Copy the UUID for your Expansion drive."
+echo "⚠️ Copy the UUID for your Expansion drive from the list above."
 
 
 read -p "Enter the UUID: " UUID
@@ -210,61 +238,33 @@ sudo mount -a
 echo "✅ Expansion Drive integrated as internal storage."
 
 
--- COPY END --
+-- END SECTION --
 
 
-​STEP 3: WAKING THE ZOMBIE
+​STEP 4: WAKE THE ZOMBIE
 
 
-​Now that the server is headless, type this single command to start your media apps:
+​Now, type this single command to start all your apps:
 
 
-m up
+m up.
 
 
-​STEP 4: THE DIGITAL NERVE CENTER (Setup Guide)
+​STEP 5: THE SMARTPHONE CONTROL CENTER
 
 
-​Your server has no screen now. Open your smartphone browser, type in your server's IP address, and use these ports to finish the setup:
-
-
-
-
-​Portainer (Port 9443): Your visual dashboard. Use this to see if your apps are running.
-
-
-​Jellyfin (Port 8096): Point your "Movie Library" to /data/expansion.
-
-
-​Prowlarr (Port 9696): Add your torrent sites here.
-
-
-​Radarr/Sonarr (Ports 7878/8989): Connect them to qBittorrent using the hostname qbittorrent.
-
-
-​Jellyseerr (Port 5055): Connect everything here using API Keys found in the other apps' settings.
+​Everything is now handled through your phone browser. Use your server's IP address and these ports:
 
 
 
 
-​📒 COMMAND CHEAT SHEET
+​Portainer (Port 9443): Tap here to see if the server is healthy.
 
 
+​Jellyfin (Port 8096): Your media player. Point libraries to /data/expansion.
 
 
-​m up: Start the apps.
-
-
-​m status: Check drive space and GPU health from your phone.
-
-
-​m mount: Refresh the connection to your USB Vault.
-
-
-​m gui-on: Turn the desktop screen back on (requires reboot).
-
-
-​m gui-off: Go back to headless mode (requires reboot).
+​Radarr/Sonarr (Ports 7878/8989): Connect to qbittorrent in the settings.
 
 
 
