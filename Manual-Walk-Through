@@ -1,6 +1,6 @@
 🧟 MERCURY: THE FULL HEADLESS ZOMBIE EDITION (v1.2)
 "The Beheading was Purposeful. The Smartphone is the Crown."
-This guide is for anyone, regardless of Linux experience. Follow these steps exactly to transform your PC into a monitor-free media server controlled entirely by your phone.
+This long form guide is for anyone, with Linux experience wanting manual install everyone else please refer Faster Install file for easier use. Follow these steps exactly to transform your PC into a monitor-free media server controlled entirely by your phone.
 STEP 1: PREPARE THE INSTALLER
 Before the "Beheading" happens, we have to create a script file on your server.
  * Open your Terminal.
