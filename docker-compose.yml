@@ -1,39 +1,168 @@
 version: "3.9"
+
 services:
+  # VPN Access & Remote SSH
   tailscale:
     image: tailscale/tailscale:latest
     container_name: tailscale
-    network_mode: host
-    cap_add: [NET_ADMIN, SYS_MODULE]
+    hostname: mercury-server
+    environment:
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+      - TS_EXTRA_ARGS=--advertise-routes=192.168.1.0/24 --advertise-exit-node --ssh
     volumes:
       - ~/mercury/config/tailscale:/var/lib/tailscale
       - /dev/net/tun:/dev/net/tun
+    network_mode: host
+    cap_add:
+      - net_admin
+      - sys_module
     restart: unless-stopped
 
+  # Visual Container Management
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
-    ports: ["9443:9443"]
+    restart: always
+    ports:
+      - 9443:9443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ~/mercury/config/portainer:/data
-    restart: always
+      - portainer_data:/data
 
+  # Media Server - Optimized for NVIDIA GTX 750
   jellyfin:
-    image: jellyfin/jellyfin:latest
+    image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
-    user: 1000:1000
     network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - NVIDIA_VISIBLE_DEVICES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     volumes:
       - ~/mercury/config/jellyfin:/config
       - /mnt/DVD_Storage:/data/storage
       - /media/linux/Expansion:/data/expansion
-    device_requests:
-      - driver: nvidia
-        count: all
-        capabilities: [gpu, video]
     restart: unless-stopped
 
+  # Request Management
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    networks:
+      - mercury-net
+    ports:
+      - 5055:5055
+    volumes:
+      - ~/mercury/config/jellyseerr:/app/config
+    restart: unless-stopped
+
+  # Indexer Manager
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    networks:
+      - mercury-net
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ~/mercury/config/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+
+  # Movie Automation
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    networks:
+      - mercury-net
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ~/mercury/config/radarr:/config
+      - /mnt/DVD_Storage:/data/storage
+      - /media/linux/Expansion:/data/expansion
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+  # TV Automation
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    networks:
+      - mercury-net
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ~/mercury/config/sonarr:/config
+      - /mnt/DVD_Storage:/data/storage
+      - /media/linux/Expansion:/data/expansion
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  # Download Client
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    networks:
+      - mercury-net
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - WEBUI_PORT=8080
+    volumes:
+      - ~/mercury/config/qbittorrent:/config
+      - /mnt/DVD_Storage:/data/storage
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+
+  # Cloudflare Bypass
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    networks:
+      - mercury-net
+    ports:
+      - 8191:8191
+    restart: unless-stopped
+
+  # Web-Based Terminal
+  ttyd:
+    image: tsl0922/ttyd:latest
+    container_name: ttyd
+    restart: unless-stopped
+    ports:
+      - 7681:7681
+    environment:
+      - PUID=1000
+      - PGID=1000
+    command: ttyd -W login
+    networks:
+      - mercury-net
+
+networks:
+  mercury-net:
+    driver: bridge
+
+volumes:
+  portainer_data:
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
