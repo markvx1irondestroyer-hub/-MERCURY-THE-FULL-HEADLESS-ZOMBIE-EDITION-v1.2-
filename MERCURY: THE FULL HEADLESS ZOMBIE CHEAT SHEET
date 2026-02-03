@@ -1,0 +1,18 @@
+​Master Control Commands
+Type m followed by these words to control the beast:
+​m up
+The Resurrection. Starts your entire media stack (Jellyfin, Sonarr, etc.) in the background.
+​m status
+The Vitals. Shows your drive space, GPU temp, and which apps are alive right on your phone.
+​m gpu
+The Pulse. A live look at your NVIDIA GTX 750's transcoding load.
+​m mount
+The Vault Refresh. Forces the system to re-scan for your Expansion drive if it didn't show up.
+​m ps
+The Roll Call. Lists every running container and the network ports they are using.
+​m reset
+The Nuclear Fix. Wipes the temporary cache and restarts every app from scratch.
+​m gui-on
+The Re-Head. Emergency command to bring back the Desktop GUI (requires reboot).
+​m gui-off
+The Beheading. Returns the system to pure Headless mode to save RAM (requires reboot).
