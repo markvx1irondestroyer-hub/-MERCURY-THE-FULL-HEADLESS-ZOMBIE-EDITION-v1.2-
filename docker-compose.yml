@@ -1,0 +1,65 @@
+version: "3.9"
+services:
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: tailscale
+    network_mode: host
+    cap_add: [NET_ADMIN, SYS_MODULE]
+    volumes:
+      - ~/mercury/config/tailscale:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+    restart: unless-stopped
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    ports: ["9443:9443"]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ~/mercury/config/portainer:/data
+    restart: always
+
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    user: 1000:1000
+    network_mode: host
+    volumes:
+      - ~/mercury/config/jellyfin:/config
+      - /mnt/DVD_Storage:/data/storage
+      - /media/linux/Expansion:/data/expansion
+    device_requests:
+      - driver: nvidia
+        count: all
+        capabilities: [gpu, video]
+    restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment: [PUID=1000, PGID=1000, TZ=UTC]
+    volumes:
+      - ~/mercury/config/qbittorrent:/config
+      - /mnt/DVD_Storage:/data/storage
+    ports: ["8080:8080"]
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment: [PUID=1000, PGID=1000, TZ=UTC]
+    volumes:
+      - ~/mercury/config/radarr:/config
+      - /media/linux/Expansion:/data/expansion
+    ports: ["7878:7878"]
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment: [PUID=1000, PGID=1000, TZ=UTC]
+    volumes:
+      - ~/mercury/config/sonarr:/config
+      - /media/linux/Expansion:/data/expansion
+    ports: ["8989:8989"]
+    restart: unless-stopped
