@@ -40,7 +40,9 @@ m() {
         reset) cd ~/mercury && docker compose down && docker system prune -f && docker compose up -d ;;
         mount) sudo mount -a && echo "🧟 Vault Refreshed." ;;
         status) ~/mercury/status.sh ;;
-        *) echo "Usage: m [gpu|up|ps|reset|mount|status]" ;;
+        gui-on) sudo systemctl set-default graphical.target && echo "✅ GUI Restored. Reboot to see desktop." ;;
+        gui-off) sudo systemctl set-default multi-user.target && echo "🧟 Beheaded. Reboot for Headless mode." ;;
+        *) echo "Usage: m [gpu|up|ps|reset|mount|status|gui-on|gui-off]" ;;
     esac
 }
 EOF
@@ -52,3 +54,4 @@ sudo systemctl set-default multi-user.target
 echo "🧟 Mercury is now Headless. Rebooting in 5 seconds..."
 sleep 5
 sudo reboot
+
