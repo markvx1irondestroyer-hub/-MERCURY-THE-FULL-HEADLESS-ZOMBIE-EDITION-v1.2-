@@ -1,0 +1,11 @@
+## 🚀 Installation (The One-Line Method)
+Follow these steps to "Behead" your server and bring the Zombie online.
+
+1. **Download and Prepare**: Paste this into your terminal to download the master installer and give it permission to run:
+   curl -O https://raw.githubusercontent.com/markvx1irondestroyer-hub/-MERCURY-THE-FULL-HEADLESS-ZOMBIE-EDITION-v1.2-/main/install-headless.sh && chmod +x install-headless.sh
+
+2. **Execute the Beheading**: Run the script to install drivers and disable the GUI:
+   ./install-headless.sh
+
+3. **Reboot & Wake**: After the system reboots headless, wake the stack:
+   m up
