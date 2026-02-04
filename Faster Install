@@ -1,7 +1,8 @@
 ## 🚀 Installation (The One-Line Method)
 Follow these steps to "Behead" your server and bring the Zombie online.
 
-1. **Download and Prepare**: Paste this into your terminal to download the master installer and give it permission to run:
+1. **Download and Prepare**: Paste this into your terminal to 
+download the master installer and give it permission to run:
    curl -O https://raw.githubusercontent.com/markvx1irondestroyer-hub/-MERCURY-THE-FULL-HEADLESS-ZOMBIE-EDITION-v1.2-/main/install-headless.sh && chmod +x install-headless.sh
 
 2. **Execute the Beheading**: Run the script to install drivers and disable the GUI:
@@ -9,7 +10,8 @@ Follow these steps to "Behead" your server and bring the Zombie online.
 
 3. **Reboot & Wake**: After the system reboots headless, wake the stack:
    m up
-### While the "One-Line Method" handles the heavy lifting of installing drivers and deploying containers, your server is not truly functional yet. 
+### While the "One-Line Method" handles the heavy lifting of installing drivers 
+And deploying containers, your server is not truly functional yet. 
 You must complete several manual configuration steps to link these apps together and secure your data.
 ✅ FINAL MISSION: THE "YOU'RE NOT DONE" CHECKLIST
 The script finished, but the Zombie needs a soul. Complete these steps in order:
@@ -29,14 +31,26 @@ The script finished, but the Zombie needs a soul. Complete these steps in order:
 4. Lock the Vault (Hard Drive)
  * Action: If you haven't already, run ./mount-vault.sh.
  * Task: Verify your external drive is mounted to /media/linux/Expansion so Jellyfin can actually see your movies.
+5. Remote Control: TTYD 
+ * Go to: 7681 and setup TTYD Web UI for Terminal Control 
+6. Remote Access: Tailscale (https://login.tailscale.com/admin/machines)
+ * Authenticate and Connect ​Log In: If you haven't already, pen your browser and sign in.
+ * Make to setup your server PC as an Exit Node to access your web UIs off your local Network 
+ * ​The "Magic" IP: Every device gets a unique, stable 100.x.y.z IP address. 
+ * This stays the same regardless of what network you’re on.
+ * ​Check the Console: Visit your Tailscale Admin Console to see all your connected devices in one list.
+ * ​tailscale status: See what else is on your network.
+ * ​tailscale ip -4: Quickly grab your Tailscale IPv4 address.
+ * ​tailscale ping <device-name>: Test the connection and see if it's a direct "peer-to-peer" link.
 📱 QUICK ACCESS DASHBOARD
-| Service | Port | Purpose |
-|---|---|---|
-| Portainer | 9443 | Managing and restarting apps |
-| Jellyfin | 8096 | Watching your media |
-| Jellyseerr | 5055 | Requesting new movies from your phone |
-| Prowlarr | 9696 | Central hub for all your movie/show searchers |
-| qBittorrent | 8080 | Managing active downloads |
+| Service     | Port |        Purpose                                |
+|-------------|------|-----------------------------------------------|
+| Portainer   | 9443 | Managing and restarting apps                  |
+| Jellyfin    | 8096 | Watching your media                           |
+| Jellyseerr  | 5055 | Requesting new movies from your phone         |
+| Prowlarr    | 9696 | Central hub for all your movie/show searchers |
+| qBittorrent | 8080 | Managing active downloads                     |
+| ttyd        | 7681 | Remote Terminal Server Control                |
 ​🔑 THE MASTER API KEY GUIDE
 COPY FULL CODE BELOW OR FOLLOW INSTRUCTIONS UNDERNEATH 
 #!/bin/bash
@@ -56,100 +70,36 @@ echo "✅ Prowlarr Key: $PROWLARR_KEY"
 echo "--------------------------------"
 echo "📱 Copy these to Jellyseerr (Port 5055) to finish the link."
 
-
-
-​To make your media stack work as one unit, the apps must "talk" to each other using API keys. Use this list to find every key you need.
-
-
+To make your media stack work as one unit, the apps must "talk" to each other using API keys. 
+Use this list to find every key you need.
 ​1. Sonarr & Radarr API Keys
-
-
 ​These keys allow Prowlarr and Jellyseerr to send movie and show requests to your downloaders.
-
-
-
-
 ​Where to look: Open the app (Port 8989 for Sonarr / 7878 for Radarr).
-
-
 ​Path: Go to Settings ➔ General.
-
-
 ​The Key: Look for the Security section. The "API Key" is a long string of random letters and numbers.
-
-
-
-
 ​2. Prowlarr API Key
-
-
 ​This key is required if you want to manage Prowlarr from another app or a custom dashboard.
-
-
-
-
 ​Where to look: Open Prowlarr (Port 9696).
-
-
 ​Path: Go to Settings ➔ General.
-
-
 ​The Key: Copy the code found in the API Key field.
-
-
-
-
 ​3. Jellyfin API Key
-
-
 ​This key allows Jellyseerr to see your "Watch History" and current library.
-
-
-
-
 ​Where to look: Open Jellyfin (Port 8096).
-
-
 ​Path: Go to Administration ➔ Dashboard ➔ Advanced ➔ API Keys.
-
-
 ​Task: Click the + New API Key button and name it "Jellyseerr" to generate your code.
-
-
-
-
 ​4. Jellyseerr API Key
-
-
 ​Used for integrating your request hub with third-party dashboards or mobile apps.
-
-
-
-
 ​Where to look: Open Jellyseerr (Port 5055).
-
-
-​Path: Go to Settings ➔ General.
-
-
+Path: Go to Settings ➔ General.
 ​The Key: Look for the API Key field near the top of the page.
-
-
-
-
-​💡 PRO-TIPS FOR CONFIGURATION
-
-
+       
+    ​💡 PRO-TIPS FOR CONFIGURATION
 Add a tab file on your phone browser and add all your Web UI as favorites for fast access and control 
-
 ​Copy/Paste Only: Never type these keys by hand. One wrong character will cause a "Connection Failed" error.
-
-
-​Test the Connection: Every app has a "Test" button next to the API Key field. Always click it until you see a green checkmark before clicking "Save".
-
-
-​Regenerate if Leaked: If you accidentally show your API key in a screenshot online, use the Regenerate button (the arrows next to the key) to create a new one immediately.
-
+​Test the Connection: Every app has a "Test" button next to the API Key field. 
+Always click it until you see a green checkmark before clicking "Save".
+​Regenerate if Leaked: If you accidentally show your API key in a screenshot online,
+use the Regenerate button (the arrows next to the key) to create a new one immediately.
 
 ​⚠️ Disclaimer: Please always check the code and understand its function before installing it on your system. 
 By running these scripts, you acknowledge that you do so at your own risk. 
