@@ -1,0 +1,15 @@
+​🧟 The "Mercury" Sideload Protocol
+The Samsung Tizen Sideload (Only 2018 Model tested)
+  1:​ On the TV: ​Go to Apps.
+  2: ​Press 1-2-3-4-5.
+  3: ​Set Developer Mode to ON.
+​  4: Enter your PC's IP (findfind in terminal)
+     (with hostname -I).
+​  5: Hold the TV Power button until it reboots.
+        ​On the Linux Server:
+​Copy and paste your docker run command below.
+⚠️🚫 Make sure to Modify with TV's IP⚠️ ​The Hit Enter.
+# Replace <TV_IP> with your Samsung TV's IP address
+docker run --rm \
+  -e JELLYFIN_RELEASE="release-10.8.z" \
+  ghcr.io/georift/install-jellyfin-tizen <TV_IP>
