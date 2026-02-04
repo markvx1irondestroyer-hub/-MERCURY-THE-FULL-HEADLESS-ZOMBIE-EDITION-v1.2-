@@ -44,26 +44,27 @@ sudo systemctl restart docker
 mkdir -p ~/mercury/config/{jellyfin,jellyseerr,sonarr,radarr,prowlarr,qbittorrent,flaresolverr,tailscale,portainer}
 sudo mkdir -p /media/linux/Expansion
 
-# 5. Inject Master 'm' Command in order (With GUI Toggle)
-# This creates short commands so you can control the server easily from your phone.
-1.cat << 'EOF' >> ~/.bash_aliases
-2.alias gpu='watch -n 1 nvidia-smi'
-3.alias mercury='cd ~/mercury'
-ADD This.. b
+# 5. Inject Master 'm' Command
+cat << 'EOF' >> ~/.bash_aliases
+# --- Mercury Master Control ---
+alias gpu='watch -n 1 nvidia-smi'
+alias mercury='cd ~/mercury'
+
 m() {
-case $1 in
-gpu)     gpu ;;
-up)      cd ~/mercury && docker compose up -d ;;
-ps)      docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" ;;
-reset)   cd ~/mercury && docker compose down && docker system prune -f && docker compose up -d ;;
-mount)   sudo mount -a && echo "🧟 Vault Refreshed." ;;
-status)  ~/mercury/status.sh ;;
-gui-on)  sudo systemctl set-default graphical.target && echo "✅ GUI Restored. Reboot to see desktop." ;;
-gui-off) sudo systemctl set-default multi-user.target && echo "🧟 Beheaded. Reboot for Headless mode." ;;
-*)       echo "Usage: m [gpu|up|ps|reset|mount|status|gui-on|gui-off]" ;;
-esac
+    case $1 in
+        gpu)     gpu ;;
+        up)      cd ~/mercury && docker compose up -d ;;
+        ps)      docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" ;;
+        reset)   cd ~/mercury && docker compose down && docker system prune -f && docker compose up -d ;;
+        mount)   sudo mount -a && echo "🧟 Vault Refreshed." ;;
+        status)  ~/mercury/status.sh ;;
+        gui-on)  sudo systemctl set-default graphical.target && echo "✅ GUI Restored. Reboot to see desktop." ;;
+        gui-off) sudo systemctl set-default multi-user.target && echo "🧟 Beheaded. Reboot for Headless mode." ;;
+        *)       echo "Usage: m [gpu|up|ps|reset|mount|status|gui-on|gui-off]" ;;
+    esac
 }
 EOF
+
 🚫 STOP B4 THIS  ------------------------------
 # 6. THE PURPOSEFUL BEHEADING
 STEP:1
@@ -97,7 +98,9 @@ read -p "Enter the UUID: " UUID
 sudo cp /etc/fstab /etc/fstab.bak
 echo "UUID=$UUID /media/linux/Expansion auto nosuid,nodev,nofail,x-gvfs-show 0 0" | sudo tee -a /etc/fstab
 sudo mount -a
-echo "✅ Expansion Drive integrated as internal storage."
+# Fix permissions AFTER the drive is mounted
+sudo chown -R 1000:1000 /media/linux/Expansion
+echo "✅ Expansion Drive integrated and permissions set."
 🚫 STOP B4 THIS  ------------------------------
 ⚠️ Critical: The "Mount-First" Rule
 ​In a Docker-based environment, the order of operations is everything. You must always ensure your 
