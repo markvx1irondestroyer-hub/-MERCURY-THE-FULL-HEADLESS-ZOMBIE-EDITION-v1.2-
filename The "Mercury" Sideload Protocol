@@ -7,6 +7,12 @@ The Samsung Tizen Sideload (Only 2018 Model tested)
      (with hostname -I).
 ​  5: Hold the TV Power button until it reboots.
         ​On the Linux Server:
+Optional fast command in Terminal (m tv)
+Follow steps to enable Developer Mode.
+​The terminal will tell you what IP to enter into the TV.
+​Type your TV's IP when asked, and watch the 
+ 🧟‍♂️ Zombie jump onto your big screen.
+   Or the long way 
 ​Copy and paste your docker run command below.
 ⚠️🚫 Make sure to Modify with TV's IP⚠️ ​The Hit Enter.
 # Replace <TV_IP> with your Samsung TV's IP address
