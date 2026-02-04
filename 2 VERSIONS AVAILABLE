@@ -2,8 +2,7 @@
 This version keeps the Zorin/Ubuntu Desktop active so you can use it with a monitor, but still gives you the single-letter m commands for convenience.
  * Mode: Graphical Desktop remains the default.
  * Best For: Users who still want to use the PC as a computer while it serves media.
- * The Script: Your current install.sh in this repo is correct; it installs everything but does not disable the screen.
- * Manual Toggle: You can add the m gui-off command to this script if you want the option to turn the screen off later.
+ * Manual Toggle: You can add the m gui-off command to the script if you want the option to turn the screen off later.
 2. The Headless Version (-MERCURY-THE-FULL-HEADLESS-ZOMBIE-EDITION-v1.2-)
 This version is designed to be "Beheaded" from the start, saving every bit of RAM for your GTX 750.
  * Mode: Terminal Only (no Desktop GUI).
