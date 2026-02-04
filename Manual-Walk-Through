@@ -1,6 +1,8 @@
 🧟 MERCURY: THE FULL HEADLESS ZOMBIE EDITION (v1.2)
 "The Beheading was Purposeful. The Smartphone is the Crown."
-This long form guide is for anyone, with Linux experience wanting manual install everyone else please refer Faster Install file for easier use. Follow these steps exactly to transform your PC into a monitor-free media server controlled entirely by your phone.
+This long form guide is for anyone, with Linux experience wanting manual install everyone else please refer 
+Faster Install file for easier use. Follow these steps exactly to transform your 
+PC into a monitor-free media server controlled entirely by your phone.
 STEP 1: PREPARE THE INSTALLER
 Before the "Beheading" happens, we have to create a script file on your server.
  * Open your Terminal.
@@ -42,11 +44,12 @@ sudo systemctl restart docker
 mkdir -p ~/mercury/config/{jellyfin,jellyseerr,sonarr,radarr,prowlarr,qbittorrent,flaresolverr,tailscale,portainer}
 sudo mkdir -p /media/linux/Expansion
 
-# 5. Inject Master 'm' Command (With GUI Toggle)
+# 5. Inject Master 'm' Command in order (With GUI Toggle)
 # This creates short commands so you can control the server easily from your phone.
-cat << 'EOF' >> ~/.bash_aliases
-alias gpu='watch -n 1 nvidia-smi'
-alias mercury='cd ~/mercury'
+1.cat << 'EOF' >> ~/.bash_aliases
+2.alias gpu='watch -n 1 nvidia-smi'
+3.alias mercury='cd ~/mercury'
+ADD This.. b
 m() {
 case $1 in
 gpu)     gpu ;;
@@ -61,9 +64,10 @@ gui-off) sudo systemctl set-default multi-user.target && echo "🧟 Beheaded. Re
 esac
 }
 EOF
-
+🚫 STOP B4 THIS  ------------------------------
 # 6. THE PURPOSEFUL BEHEADING
 # This tells the PC to stop showing a desktop and save all RAM for your movies.
+    COPY THIS
 sudo systemctl set-default multi-user.target
 echo "🧟 The Zombie is now Headless. Rebooting in 5 seconds..."
 sleep 5
@@ -93,7 +97,7 @@ sudo cp /etc/fstab /etc/fstab.bak
 echo "UUID=$UUID /media/linux/Expansion auto nosuid,nodev,nofail,x-gvfs-show 0 0" | sudo tee -a /etc/fstab
 sudo mount -a
 echo "✅ Expansion Drive integrated as internal storage."
-
+🚫 STOP B4 THIS  ------------------------------
 STEP 4: WAKING THE ZOMBIE
 Now that the brain is ready and the vault is locked, wake up your media empire:
 Type: m up
@@ -132,5 +136,17 @@ Your server is now headless. Open your smartphone browser and type in your serve
 ​💡 PRO-TIPS FOR CONFIGURATION
 ​Copy/Paste Only: Never type these keys by hand. One wrong character will cause a "Connection Failed" error.
 ​Test the Connection: Every app has a "Test" button next to the API Key field. Always click it until you see a green checkmark before clicking "Save".
-​Regenerate if Leaked: If you accidentally show your API key in a screenshot online, use the Regenerate button (the arrows next to the key) to create a new one immediately.
-
+​Regenerate if Leaked: If you accidentally show your API key in a screenshot online, use the 
+Regenerate button (the arrows next to the key) to create a new one immediately.
+​⚠️ Safety & Responsibility Disclaimer
+​While this stack is designed to be a "set-and-forget" solution, please follow these 
+safety guidelines to protect your data and hardware:  
+​Check the Code: Always inspect scripts and command strings before running them in your terminal. 
+Running unsigned code from the internet carries inherent risks; 
+ensure you understand the script's actions before execution.
+​Do Not Unplug Active Drives: Once the "Internal Trick" (fstab mount) is active, do not unplug your 
+Expansion drive while the system is powered on. 
+Abruptly removing a mounted drive can cause filesystem corruption or permanent data loss.
+​User Responsibility: By using these scripts, you acknowledge that you are doing so at your own risk.
+​Final Disclaimer: The author is not responsible for any data loss, hardware issues, 
+or system instability that may occur during the use of this repository.
