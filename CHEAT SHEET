@@ -16,3 +16,8 @@ The Nuclear Fix. Wipes the temporary cache and restarts every app from scratch.
 The Re-Head. Emergency command to bring back the Desktop GUI (requires reboot).
 ​m gui-off
 The Beheading. Returns the system to pure Headless mode to save RAM (requires reboot).
+    ​🆘 The Emergency Button
+​If your movies aren't showing up or an app feels "stuck," run the magic repair command:
+m heal
+What it does: Re-mounts your drives, fixes folder permissions, restarts crashed apps, 
+and cleans up system junk in one go.
