@@ -9,8 +9,8 @@ Follow these steps to "Behead" your server and bring the Zombie online.
 
 3. **Reboot & Wake**: After the system reboots headless, wake the stack:
    m up
-### While the "One-Line Method" handles the heavy lifting of installing drivers and deploying containers, your server is not truly functional yet. You must complete several manual configuration steps to link these apps together and secure your data.
-Add this "Final Mission" section to the bottom of your README to ensure users cross the finish line successfully.
+### While the "One-Line Method" handles the heavy lifting of installing drivers and deploying containers, your server is not truly functional yet. 
+You must complete several manual configuration steps to link these apps together and secure your data.
 ✅ FINAL MISSION: THE "YOU'RE NOT DONE" CHECKLIST
 The script finished, but the Zombie needs a soul. Complete these steps in order:
 1. Secure the Command Center (Portainer)
