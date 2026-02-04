@@ -64,23 +64,33 @@ The script finished, but the Zombie needs a soul. Complete these steps in order:
 | qBittorrent | 8080 | Managing active downloads                     |
 | ttyd        | 7681 | Remote Terminal Server Control                |
 ​🔑 THE MASTER API KEY GUIDE
+DO NOT USE THE Script below before m -up and starting the stack wait a few mins
 COPY FULL CODE BELOW OR FOLLOW INSTRUCTIONS UNDERNEATH 
 #!/bin/bash
 # 🧟 MERCURY: THE SOUL INJECTOR (Automated API Linker)
+echo "📡 Waiting for the Vault to settle..."
+sleep 5 # Give containers a moment to breathe
 
-echo "📡 Extracting API Keys from the Vault..."
+# Function to extract keys
+get_key() {
+    grep -oP '(?<=<ApiKey>).*?(?=</ApiKey>)' "$1" 2>/dev/null || echo "NOT_FOUND"
+}
 
-# Extract keys from XML files
-SONARR_KEY=$(grep -oP '(?<=<ApiKey>).*?(?=</ApiKey>)' ~/mercury/config/sonarr/config.xml)
-RADARR_KEY=$(grep -oP '(?<=<ApiKey>).*?(?=</ApiKey>)' ~/mercury/config/radarr/config.xml)
-PROWLARR_KEY=$(grep -oP '(?<=<ApiKey>).*?(?=</ApiKey>)' ~/mercury/config/prowlarr/config.xml)
+SONARR_KEY=$(get_key ~/mercury/config/sonarr/config.xml)
+RADARR_KEY=$(get_key ~/mercury/config/radarr/config.xml)
+PROWLARR_KEY=$(get_key ~/mercury/config/prowlarr/config.xml)
 
 echo "--------------------------------"
-echo "✅ Sonarr Key:  $SONARR_KEY"
-echo "✅ Radarr Key:  $RADARR_KEY"
-echo "✅ Prowlarr Key: $PROWLARR_KEY"
+echo "✅ Sonarr Key:   ${SONARR_KEY}"
+echo "✅ Radarr Key:   ${RADARR_KEY}"
+echo "✅ Prowlarr Key: ${PROWLARR_KEY}"
 echo "--------------------------------"
-echo "📱 Copy these to Jellyseerr (Port 5055) to finish the link."
+
+if [[ $SONARR_KEY == "NOT_FOUND" ]]; then
+    echo "⚠️  Some keys weren't found. Make sure you ran 'm up' and waited 60 seconds!"
+else
+    echo "📱 Copy these to Jellyseerr (Port 5055) to finish the link."
+fi
 
 To make your media stack work as one unit, the apps must "talk" to each other using API keys. 
 Use this list to find every key you need.
