@@ -1,37 +1,14 @@
 ​🎮 Beyond the GTX 750: NVIDIA Compatibility
-
-
 ​While this stack was forged for the GTX 750, it is fully compatible with most NVIDIA GPUs.
-
-
-
-
-​Automatic Detection: The install.sh script utilizes ubuntu-drivers autoinstall to identify and install the best driver for your specific card.
-
-
-​Architecture Support: The NVIDIA Container Toolkit and "Golden YAML" logic support Maxwell, Pascal, Turing, and Ampere architectures.
-
-
-
+​Automatic Detection: The install.sh script utilizes ubuntu-drivers autoinstall to identify 
+And install the best driver for your specific card.
+​Architecture Support: The NVIDIA Container Toolkit and "Golden YAML" logic support Maxwell, 
+Pascal, Turing, and Ampere architectures.
 ​Requirements:
-
-
-
 ​Ensure your GPU is properly seated and has sufficient power from your PSU.
-
-
-​For older cards (Legacy), you may need to manually verify if the 470 or 390 driver series is required before running the foundation script.
-
-
-
-
-
-
-
-
+​For older cards (Legacy), you may need to manually verify if the 470 or 390 driver series is 
+Required before running the foundation script.
 ​🛠️ Updated m command for GPU Monitoring
-
-
-​If someone is using a high-end card (like an RTX 3060), they might want more detail than just temperature. You can update the gpu alias in your install.sh to show more data:
+​If someone is using a high-end card (like an RTX 3060), they might want more detail than just 
+Temperature. You can update the gpu alias in your install.sh to show more data:
 alias gpu='watch -n 1 nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,utilization.memory,memory.used,power.draw --format=csv'
-
