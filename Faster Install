@@ -140,7 +140,7 @@ echo "📱 Copy these to Jellyseerr (Port 5055) to finish the link."
 ​💡 PRO-TIPS FOR CONFIGURATION
 
 
-
+Add a tab file on your phone browser and add all your Web UI as favorites for fast access and control 
 
 ​Copy/Paste Only: Never type these keys by hand. One wrong character will cause a "Connection Failed" error.
 
@@ -151,4 +151,6 @@ echo "📱 Copy these to Jellyseerr (Port 5055) to finish the link."
 ​Regenerate if Leaked: If you accidentally show your API key in a screenshot online, use the Regenerate button (the arrows next to the key) to create a new one immediately.
 
 
-
+​⚠️ Disclaimer: Please always check the code and understand its function before installing it on your system. 
+By running these scripts, you acknowledge that you do so at your own risk. 
+I am not responsible for any data loss, hardware issues, or system instability that may occur during or after the installation process.
