@@ -13,6 +13,8 @@ Follow these steps to "Behead" your server and bring the Zombie online.
 ### While the "One-Line Method" handles the heavy lifting of installing drivers 
 And deploying containers, your server is not truly functional yet. 
 You must complete several manual configuration steps to link these apps together and secure your data.
+If you are having trouble setting the services up or need to transfer files. use m gui-on to to temporarily 
+Return to Desktop the m gui-off when finished 
 ✅ FINAL MISSION: THE "YOU'RE NOT DONE" CHECKLIST
 The script finished, but the Zombie needs a soul. Complete these steps in order:
 1. Secure the Command Center (Portainer)
