@@ -40,8 +40,7 @@ The script finished, but the Zombie needs a soul. Complete these steps in order:
  * Action: Open Jellyfin (http://your-ip:8096) first to create your media libraries (Movies/TV).
  * Action: Open Jellyseerr (http://your-ip:5055).
  * Task: Use your Jellyfin login to sign in, then follow the setup wizard to link your Radarr and Sonarr instances using their API keys.
-4. Lock the Vault (Hard Drive)
- * Action: If you haven't already, run ./mount-vault.sh.
+4. LockDown the Vault (Hard Drive)
  * Task: Verify your external drive is mounted to /media/linux/Expansion so Jellyfin can actually see your movies.
 5. Remote Control: TTYD 
  * Go to: 7681 and setup TTYD Web UI for Terminal Control 
