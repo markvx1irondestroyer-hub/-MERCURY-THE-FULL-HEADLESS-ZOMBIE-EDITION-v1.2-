@@ -17,13 +17,23 @@ Follow these steps to "Behead" your server and bring the Zombie online.
 
 2. **Execute the Beheading**: Run the script to install drivers and disable the GUI:
   chmod +x install-headless.sh && ./install-headless.sh
+3. If you want the external storage and status check enter this this first you can remove one if you want
+    chmod +x status.sh mount-vault.sh
+   Then run the 2 scripts 1 by 1
+    ./status.sh
+    ./mount-vault.sh
+#### make sure to copy Follow to ⚠️ Copy the UUID for your Expansion drive (e.g., 1234-ABCD).
+     it will be shown in the list make sure to select the correct drive copy and paste it hit enter
 
-3. **Reboot & Wake**: After the system reboots headless, wake the stack:
-   m up
+4. **Reboot & Wake**: After the system reboots headless, Build the stack:
+   m gui-on to finish setup on Desktop
+#### ONCE YOU HAVE COMPLETED EVERYTHING#####
+ This includes if you have previous Config files make sure to swap them before launching
+ Its time to Raise the Dead m up to launch the Zombie Media Stack
 ### While the "One-Line Method" handles the heavy lifting of installing drivers 
 And deploying containers, your server is not truly functional yet. 
 You must complete several manual configuration steps to link these apps together and secure your data.
-If you are having trouble setting the services up or need to transfer files. use m gui-on to to temporarily 
+If you are having trouble or need to transfer files. use m gui-on to to temporarily 
 Return to Desktop the m gui-off when finished 
 ✅ FINAL MISSION: THE "YOU'RE NOT DONE" CHECKLIST
 The script finished, but the Zombie needs a soul. Complete these steps in order:
@@ -131,7 +141,7 @@ system crash during a transfer, the original file is preserved in the Quarantine
 ​Purpose: The curated, "approved" library.
 ​Safety: This drive only sees sequential write operations when a movie is "promoted" from Quarantine. This minimizes 
 fragmentation and extends the physical life of the drive.
-       
+    
     ​💡 PRO-TIPS FOR CONFIGURATION
 Add a tab file on your phone browser and add all your Web UI as favorites for fast access and control 
 ​Copy/Paste Only: Never type these keys by hand. One wrong character will cause a "Connection Failed" error.
