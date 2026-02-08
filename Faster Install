@@ -11,12 +11,12 @@ The "Ghost" Effect: If you mount the drive after Docker has started, the real dr
 You won't see your files, and you'll be left wondering why your disk space is disappearing.
 Follow these steps to "Behead" your server and bring the Zombie online.
 
-1. **Download and Prepare**: Paste this into your terminal to 
+1. **Download and Prepare**: Paste this into your terminal to [note if it says sudo apt install git run that first]
     download the master installer and give it permission to run:
    git clone https://github.com/markvx1irondestroyer-hub/-MERCURY-THE-FULL-HEADLESS-ZOMBIE-EDITION-v1.2-.git mercury && cd mercury
 
 2. **Execute the Beheading**: Run the script to install drivers and disable the GUI:
-   ./install-headless.sh
+  chmod +x install-headless.sh && ./install-headless.sh
 
 3. **Reboot & Wake**: After the system reboots headless, wake the stack:
    m up
