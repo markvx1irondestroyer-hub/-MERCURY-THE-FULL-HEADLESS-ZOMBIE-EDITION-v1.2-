@@ -28,7 +28,8 @@ Follow these steps to "Behead" your server and bring the Zombie online.
 4. **Reboot & Wake**: After the system reboots headless, Build the stack:
    m gui-on to finish setup on Desktop
 #### ONCE YOU HAVE COMPLETED EVERYTHING#####
- This includes if you have previous Config files make sure to swap them before launching
+ This includes check your your docker compose before launch make sure youre TimeZone code is correct
+and if you have previous Config files make sure to swap them before launching
  Its time to Raise the Dead m up to launch the Zombie Media Stack
 ### While the "One-Line Method" handles the heavy lifting of installing drivers 
 And deploying containers, your server is not truly functional yet. 
