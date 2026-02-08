@@ -87,6 +87,20 @@ echo -e "\e[0m"
 EOF
 fi
 
+# Clear screen and show the art one last time for the user
+clear
+echo -e "\e[32m"
+cat << "ZOMBIE"
+      .---.
+     / @ @ \     🧟 MERCURY MASTER INSTALLED
+    |  \_  |     -------------------------------
+    |   \_ |     All systems integrated.
+     \  m  /     Vault setup complete.
+      '---'      
+ZOMBIE
+echo "nom nom nom brains.. The Zombie is ready for you."
+echo -e "\e[0m"
+
 # 7. THE FULL BEHEADING
 sudo systemctl set-default multi-user.target
 
